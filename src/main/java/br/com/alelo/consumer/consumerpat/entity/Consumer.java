@@ -13,6 +13,10 @@ import java.util.Objects;
 @Entity
 public class Consumer {
 
+    // TODO: deixar os dados privados
+    // TODO: Separa os dados em classes, como Address, Contacts e Cards
+    // TODO: Criar um ENUM para diferenciar os tipos de Cards
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
