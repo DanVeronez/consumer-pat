@@ -30,44 +30,31 @@ public class ConsumerController {
     @Autowired
     private ConsumerService consumerService;
 
-    // @ResponseStatus(HttpStatus.OK)
-    // @RequestMapping( method = RequestMethod.GET)
-    
+    /* Listar todos os clientes (obs.: tabela possui cerca de 50.000 registros) */
     @GetMapping
     public List<Consumer> getAllConsumers(){
         // return new ResponseEntity<>(consumerService.getAllConsumers(),HttpStatus.OK);
         return consumerService.getAllConsumers();
     }
-    /* Listar todos os clientes (obs.: tabela possui cerca de 50.000 registros) */
-    // @ResponseBody
-    // @ResponseStatus(HttpStatus.OK)
-    // @RequestMapping(value = "/consumerList", method = RequestMethod.GET)
-    // public List<Consumer> listAllConsumers() {
-    //     log.info("obtendo todos clientes");
-    //     var consumers = repository.getAllConsumersList();
-
-    //     return consumers;
-    // }
 
     /* Cadastrar novos clientes */
     @PostMapping
-    public ResponseEntity<String> createConsumer(@RequestBody Consumer consumer) {
+    public ResponseEntity<String> saveConsumer(@RequestBody Consumer consumer) {
 
-        consumerService.save(consumer);
+        consumerService.saveConsumer(consumer);
         
-        return new ResponseEntity<>("Sucesso ao criar o Cliente [" + consumer.getDocumentNumber() + "]!", HttpStatus.CREATED);
-        // repository.save(consumer);
+        String messageResponse = "Sucesso ao cadastrar o consumidor [" + consumer.getId() + "]!";
+
+        return new ResponseEntity<>(messageResponse, HttpStatus.CREATED);
     }
 
-    // @RequestMapping(value = "/createConsumer", method = RequestMethod.POST)
-    // public void createConsumer(@RequestBody Consumer consumer) {
-    //     repository.save(consumer);
-    // }
-
     // Atualizar cliente, lembrando que não deve ser possível alterar o saldo do cartão
-    @RequestMapping(value = "/updateConsumer", method = RequestMethod.POST)
-    public void updateConsumer(@RequestBody Consumer consumer) {
-        repository.save(consumer);
+    @PutMapping("/{id}")
+    public ResponseEntity<Consumer> updateConsumer(@PathVariable Integer id, @RequestBody Consumer consumer) {
+
+        Consumer consumerReponse = consumerService.updateConsumer(id, consumer);
+
+        return new ResponseEntity<>(consumerReponse, HttpStatus.OK);
     }
 
     /*
