@@ -35,6 +35,7 @@ public class ConsumerController {
     
     @GetMapping
     public List<Consumer> getAllConsumers(){
+        // return new ResponseEntity<>(consumerService.getAllConsumers(),HttpStatus.OK);
         return consumerService.getAllConsumers();
     }
     /* Listar todos os clientes (obs.: tabela possui cerca de 50.000 registros) */
@@ -49,10 +50,19 @@ public class ConsumerController {
     // }
 
     /* Cadastrar novos clientes */
-    @RequestMapping(value = "/createConsumer", method = RequestMethod.POST)
-    public void createConsumer(@RequestBody Consumer consumer) {
-        repository.save(consumer);
+    @PostMapping
+    public ResponseEntity<String> createConsumer(@RequestBody Consumer consumer) {
+
+        consumerService.save(consumer);
+        
+        return new ResponseEntity<>("Sucesso ao criar o Cliente [" + consumer.getDocumentNumber() + "]!", HttpStatus.CREATED);
+        // repository.save(consumer);
     }
+
+    // @RequestMapping(value = "/createConsumer", method = RequestMethod.POST)
+    // public void createConsumer(@RequestBody Consumer consumer) {
+    //     repository.save(consumer);
+    // }
 
     // Atualizar cliente, lembrando que não deve ser possível alterar o saldo do cartão
     @RequestMapping(value = "/updateConsumer", method = RequestMethod.POST)

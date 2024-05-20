@@ -17,8 +17,25 @@ public class ConsumerService {
     ConsumerRepository consumerRepository;
 
     public List<Consumer> getAllConsumers() {
-        log.info("obtendo todos clientes");
-        return consumerRepository.getAllConsumers();
+
+        log.info("Consultando todos clientes...");
+
+        List<Consumer> consumers = consumerRepository.findAll();
+
+        log.info("Sucesso ao consultar todos os clientes!");
+
+        return consumers; 
+    }
+
+    public Consumer save(Consumer consumer) {
+
+        log.info("Cadastrando cliente...");
+
+        consumerRepository.save(consumer);
+
+        log.info("Sucesso ao criar o Cliente [" + consumer.getDocumentNumber() +"]!");
+        
+        return consumer;
     }
     
 }
