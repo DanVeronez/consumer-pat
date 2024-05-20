@@ -4,18 +4,21 @@ import br.com.alelo.consumer.consumerpat.entity.Consumer;
 import br.com.alelo.consumer.consumerpat.entity.Extract;
 import br.com.alelo.consumer.consumerpat.respository.ConsumerRepository;
 import br.com.alelo.consumer.consumerpat.respository.ExtractRepository;
+import br.com.alelo.consumer.consumerpat.service.ConsumerService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
-@Controller
-@RequestMapping("/consumer")
+@RestController
+@RequestMapping("/api/v2/consumers")
 public class ConsumerController {
 
     @Autowired
@@ -24,17 +27,26 @@ public class ConsumerController {
     @Autowired
     ExtractRepository extractRepository;
 
+    @Autowired
+    private ConsumerService consumerService;
 
-    /* Listar todos os clientes (obs.: tabela possui cerca de 50.000 registros) */
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "/consumerList", method = RequestMethod.GET)
-    public List<Consumer> listAllConsumers() {
-        log.info("obtendo todos clientes");
-        var consumers = repository.getAllConsumersList();
-
-        return consumers;
+    // @ResponseStatus(HttpStatus.OK)
+    // @RequestMapping( method = RequestMethod.GET)
+    
+    @GetMapping
+    public List<Consumer> getAllConsumers(){
+        return consumerService.getAllConsumers();
     }
+    /* Listar todos os clientes (obs.: tabela possui cerca de 50.000 registros) */
+    // @ResponseBody
+    // @ResponseStatus(HttpStatus.OK)
+    // @RequestMapping(value = "/consumerList", method = RequestMethod.GET)
+    // public List<Consumer> listAllConsumers() {
+    //     log.info("obtendo todos clientes");
+    //     var consumers = repository.getAllConsumersList();
+
+    //     return consumers;
+    // }
 
     /* Cadastrar novos clientes */
     @RequestMapping(value = "/createConsumer", method = RequestMethod.POST)
