@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Log4j2
 @RestController
@@ -36,6 +40,15 @@ public class ConsumerController {
         // return new ResponseEntity<>(consumerService.getAllConsumers(),HttpStatus.OK);
         return consumerService.getAllConsumers();
     }
+
+    @GetMapping("/{id}")
+    public Optional<Consumer> getOneConsumer(@PathVariable Integer id) {
+
+        Optional<Consumer> consumer = consumerService.getOneConsumer(id);
+
+        return consumer;
+    }
+    
 
     /* Cadastrar novos clientes */
     @PostMapping

@@ -24,6 +24,7 @@ public class ConsumerService {
      */
     public List<Consumer> getAllConsumers() {
 
+        // TODO: Adicionar contador de tempo para  a consulta.
         log.info("Consultando todos consumidores...");
 
         List<Consumer> consumers = consumerRepository.findAll();
@@ -31,6 +32,23 @@ public class ConsumerService {
         log.info("Sucesso ao consultar todos os consumidores!");
 
         return consumers; 
+    }
+
+    /**
+     * Método responsável por buscar os dados de um consumidor pelo seu ID.
+     * @param id do consumidor a ser consultado
+     * @return todos os dados do consumidor
+     */
+    public Optional<Consumer> getOneConsumer(Integer id) {
+
+        // TODO: Seria interessante criar um método para realizar essa busca pelo CPF do consumidor.
+        log.info("Consultando consumidor com ID [{}] ...", id);
+
+        Optional<Consumer> consumer = consumerRepository.findById(id);
+
+        log.info("Sucesso ao consultar consumidor com ID [{}] ...", id);
+
+        return consumer;
     }
 
     /**
@@ -51,6 +69,7 @@ public class ConsumerService {
 
     /**
      * Metodo para atualizar os dados de um consumidor. Exceto o valor em conta.
+     * @param id do consumidor que será modificado
      * @param consumer a ser atualizado com as alteraçãoes realizadas, sem ID.
      * @return retorna consumidor com os dados atualizados
      */
